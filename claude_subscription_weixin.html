@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>你以为付了钱就买到了AI服务？你只是租了一个入口</title>
+</head>
+<body style="margin:0;padding:0;background:#fff;font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;">
+
+<div style="max-width:677px;margin:0 auto;padding:0 16px;">
+
+<!-- 题图区 -->
+<div style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 40%,#0f3460 100%);border-radius:12px;padding:48px 32px 40px;margin:24px 0 32px;text-align:center;">
+  <p style="font-size:13px;color:#a78bfa;letter-spacing:3px;margin:0 0 16px;font-weight:500;">远的AI学习圈</p>
+  <h1 style="font-size:26px;font-weight:700;color:#fff;line-height:1.4;margin:0 0 20px;">你以为付了钱就买到了AI服务？<br>你只是租了一个入口</h1>
+  <p style="font-size:14px;color:#94a3b8;margin:0;line-height:1.6;">Anthropic封锁第三方工具背后<br>那个关于「锁定」的永恒商业陷阱</p>
+</div>
+
+<!-- 开场：思想实验 -->
+<section style="margin-bottom:32px;">
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">想象一个场景：</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">你花每月 20 美元订阅了一个健身房，合同上写着「无限次使用」。某天早上你照常去健身，门口的保安拦住你：「抱歉，您是从我们官方 App 预约的吗？如果您用的是 Fitbit 或 Keep 预约，需要额外付费。」</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">你一脸懵：「我付的不是健身费，是服务费吗？」</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">这件荒诞的事，在 AI 世界里刚刚真实发生了。</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">2026 年 4 月 4 日，Anthropic（Claude 的制造商）宣布：订阅了 Claude Pro（每月 20 美元）或 Claude Max（每月 100—200 美元）的用户，<strong style="color:#7c3aed;">不得再用订阅额度通过第三方工具（比如 OpenClaw）使用 Claude</strong>。想继续用？额外付钱，按量计费。</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 0;">Hacker News 讨论帖获得 684 个赞、563 条评论。Ruby on Rails 创始人 DHH 的评价只有四个字：<strong style="color:#dc2626;">Very customer hostile.（极其敌视用户）</strong></p>
+</section>
+
+<!-- 分割线 -->
+<div style="border:none;border-top:1px solid #e2e8f0;margin:32px 0;"></div>
+
+<!-- 核心论点 -->
+<section style="margin-bottom:32px;">
+  <h2 style="font-size:20px;font-weight:700;color:#1a202c;margin:0 0 20px;padding-left:12px;border-left:4px solid #7c3aed;">但你首先需要理解：OpenClaw 是什么</h2>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">OpenClaw 是一个开源的 AI Agent 工具。简单说，它允许用户把 Claude 的能力接入到自己的自动化工作流里——比如自动处理邮件、安排日历、完成编程任务，甚至让多个 AI 智能体并发工作，7×24 小时不间断地替你干活。</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">它的问题在于：太能用了。</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">一个月费 200 美元的 Claude Max 订阅用户，通过 OpenClaw 可以消耗掉价值约 <strong style="color:#dc2626;">5000 美元</strong> 的算力资源——Anthropic 实际支出了 5000，只收了 200。</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">凤凰科技把这个现象叫做「薅羊毛」。但问题是：这不是偷鸡摸狗的漏洞，这是 Anthropic 自己设计的订阅模式，OpenClaw 只是把它用得淋漓尽致。</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 0;">所以现在真正的问题不是「谁对谁错」，而是：<strong style="color:#7c3aed;">一个付费订阅，究竟买到了什么？</strong></p>
+</section>
+
+<!-- 引用框 -->
+<div style="background:#faf5ff;border-left:4px solid #7c3aed;border-radius:0 8px 8px 0;padding:20px 24px;margin:0 0 32px;">
+  <p style="font-size:15px;line-height:1.8;color:#4c1d95;margin:0 0 8px;font-weight:600;">核心概念：用户锁定效应（Lock-in Effect）</p>
+  <p style="font-size:15px;line-height:1.8;color:#5b21b6;margin:0;">经济学家 Carl Shapiro 和 Hal Varian 在 1998 年的经典著作《信息规则》（<em>Information Rules</em>）中写道：「锁定对卖方有利，对买方可能不利。」他们将这种现象定义为——当消费者因为切换到替代产品面临显著成本，就产生了对原有供应商的依赖，即锁定效应。</p>
+</div>
+
+<!-- 分割线 -->
+<div style="border:none;border-top:1px solid #e2e8f0;margin:32px 0;"></div>
+
+<!-- 第一层：表面 -->
+<section style="margin-bottom:32px;">
+  <h2 style="font-size:20px;font-weight:700;color:#1a202c;margin:0 0 20px;padding-left:12px;border-left:4px solid #3b82f6;">第一层：这件事的表面</h2>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">Anthropic 官方的解释是「工程限制」——Claude Code 负责人 Boris Cherny 在 X 上说：</p>
+  
+  <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:18px 20px;margin:0 0 18px;">
+    <p style="font-size:15px;line-height:1.8;color:#475569;margin:0;font-style:italic;">「我们的订阅计划并非为这些第三方工具的使用模式设计。第三方工具给我们的基础设施造成了过大的压力。」</p>
+    <p style="font-size:13px;color:#94a3b8;margin:8px 0 0;text-align:right;">—— Boris Cherny，Anthropic Claude Code 负责人</p>
+  </div>
+  
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">这话听起来合理。但行业分析师 Aakash Gupta 做了一个比喻，让真相一目了然：</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;"><strong style="color:#1a202c;">这叫做「自助餐关门」。</strong> 餐厅以为来的都是普通食客，没想到来了一批职业美食家，每人吃了价值 5000 块的菜，只收了 200 块钱的门票。</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">但 Anthropic 这家自助餐，已经开了两年了。为什么突然关门？</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 0;">因为时机到了。</p>
+</section>
+
+<!-- 第二层：深层 -->
+<section style="margin-bottom:32px;">
+  <h2 style="font-size:20px;font-weight:700;color:#1a202c;margin:0 0 20px;padding-left:12px;border-left:4px solid #10b981;">第二层：这件事的商业逻辑</h2>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">2026 年 2 月，Anthropic 完成了 300 亿美元的 G 轮融资，估值 3800 亿美元。这家公司的年化收入已经达到 140 亿美元，两年前的企业客户只有 12 家，现在超过 500 家，其中 8 家来自财富 10 强。</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">这意味着什么？</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;"><strong style="color:#1a202c;">意味着 Anthropic 不再需要靠「开放」来扩大用户基数了。它现在需要的，是把用户变成稳定的收入来源。</strong></p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">这是所有科技平台的同一套剧本，它有一个三阶段结构：</p>
+  
+  <div style="background:#f0fdf4;border-radius:8px;padding:20px 24px;margin:0 0 18px;">
+    <p style="font-size:15px;line-height:1.9;color:#166534;margin:0 0 10px;"><strong>第一阶段（获客）：</strong>免费或极低价格，开放 API，允许第三方集成，鼓励开发者生态。目的是积累用户和使用习惯。</p>
+    <p style="font-size:15px;line-height:1.9;color:#166534;margin:0 0 10px;"><strong>第二阶段（锁定）：</strong>引入付费订阅，但维持对第三方相对开放。用户开始依赖这个工具，越来越难以切换。</p>
+    <p style="font-size:15px;line-height:1.9;color:#166534;margin:0;"><strong>第三阶段（收割）：</strong>封锁第三方，强制付费升级，建立围墙花园，把用户牢牢锁在自家生态。</p>
+  </div>
+  
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">这不是 Anthropic 的发明。这是所有平台做大之后的必然选项。</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">2023 年，Netflix 打击密码共享，结果下半年新增了 2200 万订阅用户，创疫情后最高纪录。同年，Twitter（现 X）关闭免费 API，开发者生态严重受损，但马斯克不在乎——他要的是广告收入，不是开发者社区。Reddit 关闭免费 API，8000 个子版块抗议罢工，Reddit 纹丝不动，并成功在 2024 年完成 IPO。</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 0;">每一个平台都这样做了。每一次，用户都愤怒。每一次，平台都无动于衷。</p>
+</section>
+
+<!-- 数据可视化模块 -->
+<div style="background:#fffbeb;border:1px solid #fcd34d;border-radius:10px;padding:20px 24px;margin:0 0 32px;">
+  <p style="font-size:14px;font-weight:700;color:#92400e;margin:0 0 14px;letter-spacing:1px;">▎ 行业「关闭免费访问」对比</p>
+  <div style="display:flex;flex-direction:column;gap:10px;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-size:13px;color:#78350f;width:80px;flex-shrink:0;">Netflix</span>
+      <div style="flex:1;background:#e5e7eb;border-radius:4px;height:8px;overflow:hidden;"><div style="background:#10b981;height:100%;width:85%;border-radius:4px;"></div></div>
+      <span style="font-size:12px;color:#10b981;width:80px;text-align:right;">✅ 净增2200万用户</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-size:13px;color:#78350f;width:80px;flex-shrink:0;">Twitter/X</span>
+      <div style="flex:1;background:#e5e7eb;border-radius:4px;height:8px;overflow:hidden;"><div style="background:#ef4444;height:100%;width:65%;border-radius:4px;"></div></div>
+      <span style="font-size:12px;color:#ef4444;width:80px;text-align:right;">❌ 开发者生态受损</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-size:13px;color:#78350f;width:80px;flex-shrink:0;">Reddit</span>
+      <div style="flex:1;background:#e5e7eb;border-radius:4px;height:8px;overflow:hidden;"><div style="background:#f59e0b;height:100%;width:70%;border-radius:4px;"></div></div>
+      <span style="font-size:12px;color:#f59e0b;width:80px;text-align:right;">⚠️ IPO成功但伤信任</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-size:13px;color:#78350f;width:80px;flex-shrink:0;">Anthropic</span>
+      <div style="flex:1;background:#e5e7eb;border-radius:4px;height:8px;overflow:hidden;"><div style="background:#8b5cf6;height:100%;width:50%;border-radius:4px;"></div></div>
+      <span style="font-size:12px;color:#8b5cf6;width:80px;text-align:right;">🔄 结果待定</span>
+    </div>
+  </div>
+</div>
+
+<!-- 分割线 -->
+<div style="border:none;border-top:1px solid #e2e8f0;margin:32px 0;"></div>
+
+<!-- 第三层：影响 -->
+<section style="margin-bottom:32px;">
+  <h2 style="font-size:20px;font-weight:700;color:#1a202c;margin:0 0 20px;padding-left:12px;border-left:4px solid #f59e0b;">第三层：这件事对你的影响</h2>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">好了，现在我们来说说这和普通人有什么关系。</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">先说直接影响：</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">如果你是 Claude 的重度用户，并且依赖第三方工具来自动化工作，成本可能从每月 200 美元飙升至每月 500—2000 美元——最高涨幅 <strong style="color:#dc2626;">50 倍</strong>。超过 13.5 万个 OpenClaw 实例受到影响。有开发者把工作流迁移到 DeepSeek 后，月成本从 200 美元降到了 15 美元。</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">如果你是普通用户，目前没什么直接影响。但你需要看懂一个趋势。</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">2026 年，主流 AI 工具的基础订阅价已经收敛到了一个数字：<strong style="color:#7c3aed;">每月 20 美元</strong>——ChatGPT Plus 20 美元、Claude Pro 20 美元、Gemini AI Pro 20 美元、Perplexity Pro 20 美元。</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">如果你同时订阅三个「主力工具」，一个月就要花 60 美元——折合人民币约 440 元。</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">根据 C+R Research 的调查，消费者的实际月均订阅支出是 219 美元，但他们自己估计只有 86 美元——差了足足 133 美元。<strong style="color:#1a202c;">74% 的人认为定期订阅扣款「很容易被遗忘」。</strong></p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">这就是注意力经济学家 Herbert Simon 在 1971 年预言的：</p>
+  
+  <div style="background:#fef3c7;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:18px 20px;margin:0 0 18px;">
+    <p style="font-size:15px;line-height:1.8;color:#92400e;margin:0;font-style:italic;">「信息的丰富导致注意力的贫乏。信息所消耗的，恰恰是接收者的注意力。」</p>
+    <p style="font-size:13px;color:#78350f;margin:8px 0 0;text-align:right;">—— Herbert A. Simon，《Designing Organizations for an Information-Rich World》，1971</p>
+  </div>
+  
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">Simon 说这话的时候，互联网还没发明。他是在预言一个我们今天亲身经历的世界：当信息和服务泛滥，我们的注意力反而成了最稀缺的资源——而平台们最擅长的，就是让你在不知不觉中为注意力付钱。</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 0;">更深层的问题是：<strong style="color:#7c3aed;">AI 工具的锁定效应，比任何以往的订阅服务都要强得多。</strong></p>
+</section>
+
+<!-- 锁定效应说明 -->
+<div style="background:#f5f3ff;border-radius:10px;padding:20px 24px;margin:0 0 32px;">
+  <p style="font-size:14px;font-weight:700;color:#4c1d95;margin:0 0 12px;letter-spacing:1px;">▎ 为什么 AI 的锁定效应特别强？</p>
+  <p style="font-size:14px;line-height:1.8;color:#5b21b6;margin:0 0 10px;">📌 <strong>提示词格式差异：</strong>为 Claude 优化的指令，在 GPT 上效果下降 30%—50%，需要全部重写。</p>
+  <p style="font-size:14px;line-height:1.8;color:#5b21b6;margin:0 0 10px;">📌 <strong>上下文习惯差异：</strong>你花数月在 Claude 里积累的「项目记忆」，迁移到另一个工具时几乎是清零。</p>
+  <p style="font-size:14px;line-height:1.8;color:#5b21b6;margin:0 0 10px;">📌 <strong>工作流绑定：</strong>一旦把 AI 深度嵌入日常流程，完整迁移周期往往需要 18—36 个月。</p>
+  <p style="font-size:14px;line-height:1.8;color:#5b21b6;margin:0;">📌 <strong>心理成本：</strong>用惯了一个 AI 的「语感」，换到另一个总觉得「别扭」。这本身就是隐形的锁定。</p>
+</div>
+
+<!-- 分割线 -->
+<div style="border:none;border-top:1px solid #e2e8f0;margin:32px 0;"></div>
+
+<!-- 我的评论 -->
+<section style="margin-bottom:32px;">
+  <h2 style="font-size:20px;font-weight:700;color:#1a202c;margin:0 0 20px;padding-left:12px;border-left:4px solid #6366f1;">我的评论</h2>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">Anthropic 这次做的事，技术上说得通，商业上无可指摘，但有一个细节让我觉得难受：</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">通知时间不到 24 小时，没有过渡期，没有给开发者任何缓冲。OpenClaw 创始人 Peter Steinberger 后来说，他们曾试图游说 Anthropic 推迟执行，最终争取到的结果是「延迟一周」。</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">有意思的是：Anthropic 的 Claude Code 负责人 Boris Cherny 亲自为 OpenClaw 提交过优化代码，他们不是敌人。然后 Anthropic 把 OpenClaw 的功能学走，集成到自家产品里，再把 OpenClaw 封锁掉。</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">OpenClaw 创始人 Steinberger 用了一个词：<strong style="color:#dc2626;">背叛（betrayal）</strong>。</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">这里有一个我们需要承认的反常识真相：<strong style="color:#7c3aed;">免费并不意味着没有代价，便宜也不意味着没有风险。</strong> 当你用低价换取了一个工具，你其实在用「依赖」这个隐性成本做交换。平台用低价把你圈进来，用锁定把你留下，用涨价把你的钱取出来。</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 18px;">更大的问题在于：如果 OpenAI 和 Google 也跟进类似策略——这几乎是必然的——那么「根据任务自由切换 AI 工具」的理想，可能会在 2026 年就宣告终结。</p>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 0;">AI 大模型时代的「围墙花园」，正在一堵一堵砌起来。</p>
+</section>
+
+<!-- 分割线 -->
+<div style="border:none;border-top:1px solid #e2e8f0;margin:32px 0;"></div>
+
+<!-- 由此得到 -->
+<section style="margin-bottom:32px;">
+  <h2 style="font-size:20px;font-weight:700;color:#1a202c;margin:0 0 20px;padding-left:12px;border-left:4px solid #ec4899;">由此得到</h2>
+  <p style="font-size:16px;line-height:1.9;color:#1a202c;margin:0 0 20px;">针对不同类型的读者，这里有几条可操作的建议：</p>
+  
+  <div style="background:#fdf2f8;border-radius:10px;padding:20px 24px;margin:0 0 14px;">
+    <p style="font-size:15px;font-weight:700;color:#831843;margin:0 0 10px;">① 如果你是普通用户：定期审计你的 AI 订阅</p>
+    <p style="font-size:14px;line-height:1.8;color:#9d174d;margin:0;">每季度清点一次你订阅了哪些 AI 工具，实际使用频率如何。研究表明，42% 的人仍在为已不使用的订阅付费。「付了就不用可惜」这种心理，正是平台锁定策略所依赖的。</p>
+  </div>
+  
+  <div style="background:#eff6ff;border-radius:10px;padding:20px 24px;margin:0 0 14px;">
+    <p style="font-size:15px;font-weight:700;color:#1e3a8a;margin:0 0 10px;">② 不要把鸡蛋放在一个篮子里</p>
+    <p style="font-size:14px;line-height:1.8;color:#1e40af;margin:0;">当你深度依赖某一个 AI 工具时，保留一个替代方案的使用习惯。不是要你频繁切换，而是要让自己的工作流不至于因为一个平台的政策变化而瘫痪。国内用户可以关注 DeepSeek、Kimi、通义等本土大模型——它们在成本和稳定性上往往更有优势。</p>
+  </div>
+  
+  <div style="background:#f0fdf4;border-radius:10px;padding:20px 24px;margin:0 0 14px;">
+    <p style="font-size:15px;font-weight:700;color:#14532d;margin:0 0 10px;">③ 企业用户：把「平台锁定风险」写进 AI 采购评估</p>
+    <p style="font-size:14px;line-height:1.8;color:#166534;margin:0;">在选择 AI 工具时，除了功能和价格，还要评估：这个平台的 API 是否标准化？数据能否迁移？历史上是否有过突然涨价或政策变化？切换成本可能是初始实施投资的 2—6 倍。</p>
+  </div>
+  
+  <div style="background:#fff7ed;border-radius:10px;padding:20px 24px;margin:0 0 0;">
+    <p style="font-size:15px;font-weight:700;color:#7c2d12;margin:0 0 10px;">④ 最重要的一点：不要把「便宜」误认为「免费」</p>
+    <p style="font-size:14px;line-height:1.8;color:#9a3412;margin:0;">每月 20 美元看起来很便宜。但当你的工作流完全绑定在某个 AI 平台上之后，这个「20 美元」的实际控制力，已经不再属于你。你没有买到服务，你买到的是一个入口的使用权，而入口的价格，可以随时调整。</p>
+  </div>
+</section>
+
+<!-- 分割线 -->
+<div style="border:none;border-top:1px solid #e2e8f0;margin:32px 0;"></div>
+
+<!-- 金句收尾 -->
+<section style="margin-bottom:40px;">
+  <div style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 40%,#0f3460 100%);border-radius:12px;padding:36px 28px;text-align:center;">
+    <p style="font-size:13px;color:#a78bfa;letter-spacing:3px;margin:0 0 20px;font-weight:500;">今日反常识结论</p>
+    <p style="font-size:22px;font-weight:700;color:#fff;line-height:1.5;margin:0 0 20px;">你花钱买到的，<br>不是 AI 的能力，<br>而是平台对你的依赖。</p>
+    <p style="font-size:14px;color:#94a3b8;line-height:1.7;margin:0;">真正的能力，是你能随时离开，<br>并且不会损失什么。</p>
+  </div>
+</section>
+
+<!-- 分割线 -->
+<div style="border:none;border-top:1px solid #e2e8f0;margin:32px 0;"></div>
+
+<!-- 参考来源 -->
+<section style="margin-bottom:40px;">
+  <h2 style="font-size:16px;font-weight:700;color:#64748b;margin:0 0 14px;">参考来源</h2>
+  <p style="font-size:13px;line-height:2;color:#94a3b8;margin:0;">The Verge / Anthropic bans OpenClaw from Claude（2026.04.03）&nbsp;·&nbsp; TechCrunch / Claude Code subscribers need to pay extra（2026.04.04）&nbsp;·&nbsp; VentureBeat / Anthropic cuts off third-party AI agents（2026.04.04）&nbsp;·&nbsp; 凤凰网科技 / Anthropic封堵第三方工具"薅羊毛"（2026.04.04）&nbsp;·&nbsp; Backlinko / Claude Statistics 2026&nbsp;·&nbsp; Stabilarity Research / AI Vendor Lock-in Economics（2026.02）&nbsp;·&nbsp; Readless / 14 Subscription Fatigue Statistics 2026&nbsp;·&nbsp; Shapiro &amp; Varian / Information Rules（1998，Harvard Business School Press）&nbsp;·&nbsp; Tim Wu / The Attention Merchants（2016）&nbsp;·&nbsp; 机器之心 / 全网开骂！Claude订阅「封杀」OpenClaw（2026.04.04）</p>
+</section>
+
+<!-- 底部品牌 -->
+<div style="text-align:center;padding:20px 0 32px;">
+  <p style="font-size:13px;color:#cbd5e1;margin:0 0 4px;">远的AI学习圈</p>
+  <p style="font-size:12px;color:#e2e8f0;margin:0;">让你了解最前沿的AI科技资讯</p>
+</div>
+
+</div>
+</body>
+</html>
