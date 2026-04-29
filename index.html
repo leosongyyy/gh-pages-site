@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Wiki Starter - 从零开始的个人知识库</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 60px 40px;
+            margin: 40px 0;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 1.3em;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.2em;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-left: 5px solid #764ba2;
+            padding-left: 15px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .feature-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .comparison {
+            margin: 30px 0;
+        }
+
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .comparison-item {
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .comparison-old {
+            background: #fff3f3;
+            border-left: 4px solid #e74c3c;
+        }
+
+        .comparison-new {
+            background: #f0fff4;
+            border-left: 4px solid #27ae60;
+        }
+
+        .steps {
+            counter-reset: step;
+        }
+
+        .step {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 30px;
+        }
+
+        .step::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .step-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        .code-comment {
+            color: #75715e;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .faq-item {
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .faq-answer {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 60px 40px;
+        }
+
+        .cta-title {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+            opacity: 0.9;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .comparison-row {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding: 40px 20px;
+            }
+
+            .section {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">🧠</div>
+            <h1>LLM Wiki Starter</h1>
+            <p class="tagline">从零开始的个人知识库搭建指南</p>
+            <a href="#" class="download-btn" onclick="alert('技能文件：~/.qclaw/workspace/llm-wiki-starter.skill')">⬇️ 下载技能包</a>
+            <p style="margin-top: 20px; color: #999; font-size: 0.9em;">
+                <span class="badge">✅ 无需编程</span>
+                <span class="badge">✅ 自动化工具</span>
+                <span class="badge">✅ 免费开源</span>
+            </p>
+        </header>
+
+        <!-- What is LLM Wiki -->
+        <div class="section">
+            <h2>什么是 LLM Wiki？</h2>
+            <p style="font-size: 1.1em; margin-bottom: 20px;">
+                LLM Wiki 是一种<strong>新型的个人知识管理方法</strong>。传统Wiki需要你手动编辑和维护，而LLM Wiki由<strong>AI助手自动维护</strong>。
+            </p>
+
+            <div class="comparison">
+                <div class="comparison-row">
+                    <div class="comparison-item comparison-old">
+                        <strong>传统Wiki 😓</strong>
+                        <ul style="margin-top: 10px; margin-left: 20px;">
+                            <li>每篇文章手动编辑（1-2小时）</li>
+                            <li>格式不一致</li>
+                            <li>忘记添加链接</li>
+                            <li>索引更新不及时</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-item comparison-new">
+                        <strong>LLM Wiki 🚀</strong>
+                        <ul style="margin-top: 10px; margin-left: 20px;">
+                            <li>AI自动编译（5-10分钟）</li>
+                            <li>格式统一标准</li>
+                            <li>自动关联概念</li>
+                            <li>索引实时更新</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <div class="feature-title">AI自动维护</div>
+                    <p>添加素材后，AI自动提取概念、生成概念页、建立关联网络。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <div class="feature-title">双向链接</div>
+                    <p>概念之间自动建立链接，形成知识网络，轻松发现关联。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <div class="feature-title">自然语言查询</div>
+                    <p>直接用中文提问："解释一下自由能原理"，AI会基于你的知识库回答。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <div class="feature-title">本地存储</div>
+                    <p>所有数据存储在本地，不上传云端，完全由你控制，保护隐私。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Start -->
+        <div class="section">
+            <h2>5分钟快速开始</h2>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-title">安装Obsidian</div>
+                    <p>从 <a href="https://obsidian.md/download" target="_blank">obsidian.md</a> 下载并安装Obsidian（免费）。</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-title">初始化项目</div>
+                    <p>运行初始化脚本，创建标准目录结构：</p>
+                    <div class="code-block">
+                        <span class="code-comment"># 创建项目目录</span><br>
+                        mkdir ~/my-llm-wiki<br><br>
+                        <span class="code-comment"># 初始化</span><br>
+                        python3 ~/.qclaw/skills/llm-wiki-starter/scripts/init_llm_wiki.py ~/my-llm-wiki
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-title">用Obsidian打开</div>
+                    <p>打开Obsidian → "Open folder as vault" → 选择 <code>~/my-llm-wiki</code></p>
+                </div>
+
+                <div class="step">
+                    <div class="step-title">添加第一个素材</div>
+                    <p>把一篇文章保存到 <code>raw/articles/</code> 目录：</p>
+                    <div class="code-block">
+                        <span class="code-comment"># 保存文章</span><br>
+                        echo "# 自由能原理\n内容..." > ~/my-llm-wiki/raw/articles/2026-04-30-free-energy.md
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-title">编译知识</div>
+                    <p>让AI帮你编译素材：</p>
+                    <div class="code-block">
+                        python3 ~/.qclaw/skills/llm-wiki-starter/scripts/compile_raw.py ~/my-llm-wiki
+                    </div>
+                    <p style="margin-top: 10px;">或在OpenClaw中说：<strong>"请编译raw目录的素材"</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Core Tools -->
+        <div class="section">
+            <h2>核心工具</h2>
+
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <div class="feature-title">init_llm_wiki.py</div>
+                    <p>一键初始化项目，创建目录结构和配置文件。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📝</div>
+                    <div class="feature-title">compile_raw.py</div>
+                    <p>自动扫描素材，提取概念，生成概念页。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏥</div>
+                    <div class="feature-title">wiki_health.py</div>
+                    <p>检查知识库健康度，发现问题自动报告。</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <h3 style="color: #667eea; margin-bottom: 15px;">详细文档</h3>
+                <ul style="list-style: none;">
+                    <li style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                        <strong>WORKFLOW.md</strong> - 完整工作流程（安装、初始化、日常使用）
+                    </li>
+                    <li style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                        <strong>BEST_PRACTICES.md</strong> - 最佳实践（素材管理、知识编译、概念设计）
+                    </li>
+                    <li style="padding: 10px 0;">
+                        <strong>FAQ.md</strong> - 常见问题（24个Q&A）
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Use Cases -->
+        <div class="section">
+            <h2>典型使用场景</h2>
+
+            <div style="margin: 30px 0;">
+                <h3 style="color: #333; margin-bottom: 15px;">📊 场景1：添加新素材</h3>
+                <p>你看到一篇好文章，想保存到知识库：</p>
+                <ol style="margin-left: 25px; margin-top: 10px; line-height: 2;">
+                    <li>复制文章内容</li>
+                    <li>保存到 <code>raw/articles/2026-04-30-article.md</code></li>
+                    <li>说："请编译这篇素材"</li>
+                    <li>AI自动提取概念、生成概念页、更新索引</li>
+                </ol>
+            </div>
+
+            <div style="margin: 30px 0;">
+                <h3 style="color: #333; margin-bottom: 15px;">🔍 场景2：查询知识</h3>
+                <p>你想理解某个概念：</p>
+                <ol style="margin-left: 25px; margin-top: 10px; line-height: 2;">
+                    <li>说："解释一下自由能原理"</li>
+                    <li>AI搜索相关概念页</li>
+                    <li>用通俗语言解释</li>
+                    <li>提供相关概念链接</li>
+                </ol>
+            </div>
+
+            <div style="margin: 30px 0;">
+                <h3 style="color: #333; margin-bottom: 15px;">🕸️ 场景3：建立知识网络</h3>
+                <p>你想把零散的概念连接起来：</p>
+                <ol style="margin-left: 25px; margin-top: 10px; line-height: 2;">
+                    <li>说："帮我建立概念网络"</li>
+                    <li>AI分析概念间关系</li>
+                    <li>添加双向链接</li>
+                    <li>生成主题页</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="section">
+            <h2>常见问题</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">Q：我需要懂编程吗？</div>
+                <div class="faq-answer">
+                    <strong>A：完全不需要！</strong> LLM Wiki专为非技术用户设计。你只需要会基本的电脑操作（复制粘贴文件），会用自然语言与AI对话即可。
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q：数据安全吗？</div>
+                <div class="faq-answer">
+                    <strong>A：非常安全。</strong>所有数据存储在你的本地电脑，不上传到云端。AI只在你请求时访问你的文件，完全由你控制。建议定期备份到云盘或外部硬盘。
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q：为什么要用Obsidian？</div>
+                <div class="faq-answer">
+                    <strong>A：Obsidian是最佳的双向链接笔记工具。</strong>它支持：<br>
+                    • 双向链接 <code>[[概念名]]</code><br>
+                    • 图谱可视化<br>
+                    • Markdown原生支持<br>
+                    • 本地存储<br>
+                    • 免费使用<br>
+                    也可以用Logseq等类似工具替代。
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q：编译后的概念页质量如何保证？</div>
+                <div class="faq-answer">
+                    <strong>A：AI生成 + 人工审核 = 最佳实践。</strong><br>
+                    1. AI生成初稿（5分钟）<br>
+                    2. 快速检查（2分钟）- 链接、内容、格式<br>
+                    3. 深度完善（按需）- 补充理解、应用案例、概念网络<br>
+                    建议小批量编译，及时检查。
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q：多久编译一次比较合适？</div>
+                <div class="faq-answer">
+                    <strong>A：推荐"少量多次"。</strong><br>
+                    • 日常：每天1-2篇<br>
+                    • 周末：批量处理本周素材<br>
+                    • 避免：积压几十篇一次性编译（质量难保证）<br>
+                    最高效的方式：看到好文章立即编译。
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="section cta-section">
+            <div class="cta-title">开始搭建你的第二大脑 🚀</div>
+            <p style="color: #666; margin-bottom: 30px;">
+                5分钟初始化，30分钟添加第一批素材，开始你的知识管理之旅
+            </p>
+            <a href="#" class="download-btn" onclick="alert('技能文件：~/.qclaw/workspace/llm-wiki-starter.skill')">⬇️ 立即下载技能包</a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>
+                Made with ❤️ by QClaw Team<br>
+                <a href="https://github.com/你的用户名/llm-wiki-starter" target="_blank">GitHub</a> • 
+                <a href="https://github.com/你的用户名/llm-wiki-starter/blob/main/docs/FAQ.md" target="_blank">FAQ</a> • 
+                <a href="mailto:your-email@example.com">联系作者</a>
+            </p>
+            <p style="margin-top: 10px; font-size: 0.9em;">
+                © 2026 LLM Wiki Starter. MIT License.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
